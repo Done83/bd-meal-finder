@@ -61,6 +61,24 @@ const getMealById = async (mealID) => {
   }
 };
 
+// Fetch random meal
+const getRandomMeal = async () => {
+  // Clear meals and heading
+  mealsEl.innerHTML = "";
+  resultHeading.innerHTML = "";
+
+  try {
+    const response = await fetch(
+      "https://www.themealdb.com/api/json/v1/1/random.php"
+    );
+    const data = await response.json();
+    const meal = data.meals[0];
+    addMealtoDOM(meal);
+  } catch (error) {
+    console.error("Failed to fetch data:", error);
+  }
+};
+
 // Add single meal to DOM
 const addMealtoDOM = (meal) => {
   const ingredients = [];
@@ -111,3 +129,5 @@ mealsEl.addEventListener("click", (e) => {
   } else {
   }
 });
+
+random.addEventListener("click", getRandomMeal);
